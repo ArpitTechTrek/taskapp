@@ -16,10 +16,9 @@ class Task {
     this.id = 0,
     required this.date,
     required this.title,
-    required this.description, 
+    required this.description,
     this.isDone = false,
     this.isDeleted = false,
-
   });
 
   Task copyWith({
@@ -31,8 +30,8 @@ class Task {
     bool? isDeleted,
   }) {
     return Task(
-      id:  id ?? this.id,
-      date:  date ?? this.date,
+      id: id ?? this.id,
+      date: date ?? this.date,
       title: title ?? this.title,
       isDone: isDone ?? this.isDone,
       description: description ?? this.description,

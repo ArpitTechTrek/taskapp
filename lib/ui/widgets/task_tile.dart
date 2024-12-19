@@ -70,7 +70,7 @@ class TaskTile extends StatelessWidget {
                       }
                     : null,
               ),
-              PupupMenu(
+              PopupMenu(
                   task: task,
                   cancelOrDeleteCallback: () =>_onDeleteTask(context, task),
                   editTaskCallback: () => _editTask(context)

@@ -11,8 +11,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -52,6 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: TextFormField(
                 controller: _passwordController,
                 decoration: const InputDecoration(labelText: 'Insert password'),
+                obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Password is required';

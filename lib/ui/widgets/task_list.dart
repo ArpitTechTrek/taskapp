@@ -13,36 +13,37 @@ class TaskLists extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: SingleChildScrollView(
-        child: ExpansionPanelList.radio(
-          children: tasksLists
-              .map(
-                (task) => ExpansionPanelRadio(
-                  value: task.id,
-                  headerBuilder: (context, isExpanded) => TaskTile(task: task),
-                  body: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                    //visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                    //dense: true,
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //Description of the task is displayed here
-                        Expanded(
-                          child: Text(
-                                task.description,
-                                softWrap: true,
-                                overflow: TextOverflow.visible,
-                              ),
+      child: ListView.builder(
+        itemCount: tasksLists.length,
+        itemBuilder: (context, index) {
+          final task = tasksLists[index];
+          return ExpansionPanelList.radio(
+            children: [
+              ExpansionPanelRadio(
+                value: task.id,
+                headerBuilder: (context, isExpanded) => TaskTile(task: task),
+                body: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      child: Text(
+                        task.description,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          //color: Colors.black,
                         ),
-                          
-                        ]),
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-              )
-              .toList(),
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

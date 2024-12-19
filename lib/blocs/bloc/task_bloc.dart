@@ -24,28 +24,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     //Creating the task locally first
     objectbox.taskBox.put(event.task);
     //creating task on firebase
-      try {
-        await FirestoreRepository.createTask(event.task);
-      } on Exception catch (e) {
-        emit(TaskState(errorMessage: "Failed to create task : ${e.toString()}"));
-      }
-    
+    try {
+      await FirestoreRepository.createTask(event.task);
+    } on Exception catch (e) {
+      emit(TaskState(errorMessage: "Failed to create task : ${e.toString()}"));
+    }
   }
 
   //Retreiving all the tasks form the database.
   Future<void> _onGetAllTasks(
       GetAllTasks event, Emitter<TaskState> emit) async {
     List<Task> allTasks = [];
-    List<Task> removedTasks = [];
 
-    final localTasks = objectbox.taskBox.getAll();
-    for (var task in localTasks) {
-      if (task.isDeleted) {
-        removedTasks.add(task);
-      } else {
-        allTasks.add(task);
-      }
-    }
+    final localTasks =
+        objectbox.taskBox.getAll().where((task) => !task.isDeleted).toList();
 
     // Fetching task from firestore and putting in localstorage
     bool isConnected = await NetworkService.available();
@@ -56,24 +48,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           objectbox.taskBox.put(task);
         }
         // Now refresing the local data
-        allTasks.clear();
-        removedTasks.clear();
-      
-        final updatedTasks = objectbox.taskBox.getAll();
-        for (var task in updatedTasks) {
-          if (task.isDeleted) {
-            removedTasks.add(task);
-          } else {
-            allTasks.add(task);
-          }
-        }
+        final updatedTasks = objectbox.taskBox
+            .getAll()
+            .where((task) => !task.isDeleted)
+            .toList();
+        allTasks.addAll(updatedTasks);
       } catch (e) {
         emit(TaskState(errorMessage: "Failed to get tasks : ${e.toString()}"));
         return;
       }
+    } else {
+      //if there is no internet connection then we will show the local tasks
+      allTasks.addAll(localTasks);
     }
-
-    emit(TaskState(allTasks: allTasks, removedTasks: removedTasks));
+    emit(TaskState(allTasks: allTasks));
   }
 
   //Updating the task whether it is completed or not
@@ -84,12 +72,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     objectbox.taskBox.put(updateTask);
 
     //then trying to sync with database
-      try {
-        await FirestoreRepository.updateTask(updateTask);
-        objectbox.taskBox.put(updateTask);
-      } catch (e) {
-        emit(TaskState(errorMessage: "Failed to update task : ${e.toString()}"));
-      }
+    try {
+      await FirestoreRepository.updateTask(updateTask);
+      objectbox.taskBox.put(updateTask);
+    } catch (e) {
+      emit(TaskState(errorMessage: "Failed to update task : ${e.toString()}"));
+    }
   }
 
   //Editing the task
@@ -107,7 +95,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   //Deleting the task from database.
   void _onDeleteTask(DeleteTask event, Emitter<TaskState> emit) async {
-
     //deleting the task from local storage
     objectbox.taskBox.remove(event.task.id);
 

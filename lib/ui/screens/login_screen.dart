@@ -47,8 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
+                    }else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value) == false){
+                      return 'Please enter a valid email';
                     }
-                    return null;
+                      return null;
                   },
                 ),
               ),
@@ -56,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   controller: _passwordController,
+                  obscureText: true,
                   decoration:
                       const InputDecoration(labelText: 'Insert password'),
                   validator: (value) {

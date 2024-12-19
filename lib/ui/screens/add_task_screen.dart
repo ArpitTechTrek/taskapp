@@ -3,6 +3,7 @@ import 'package:taskapp/main.dart';
 import 'package:taskapp/models/task.dart';
 import '../../blocs/bloc_exports.dart';
 
+// ignore: must_be_immutable
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen({super.key});
 
@@ -10,6 +11,7 @@ class AddTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(

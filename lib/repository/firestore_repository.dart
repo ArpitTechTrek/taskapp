@@ -4,26 +4,23 @@ import 'package:taskapp/main.dart';
 import 'package:taskapp/models/task.dart';
 
 class FirestoreRepository {
-
-
   //create task function
   static Future<void> createTask(Task task) async {
-
     objectbox.taskBox.put(task);
+
     try {
       await FirebaseFirestore.instance
           .collection(GetStorage().read('email'))
           .doc(task.id.toString())
           .set(task.toMap());
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception("Failed to create task: $e.toString()");
     }
   }
 
   //get all tasks function
   static Future<List<Task>> getTasks() async {
-
-    List <Task> allTasks = [];
+    List<Task> allTasks = [];
     try {
       final data = await FirebaseFirestore.instance
           .collection(GetStorage().read('email'))
@@ -35,25 +32,21 @@ class FirestoreRepository {
         objectbox.taskBox.put(singleTask);
       }
       return allTasks;
-
     } catch (e) {
-      throw Exception(e);
+      throw Exception("Failed to get tasks: $e.toString()");
     }
   }
 
   //update task function whether it is completed or not
   static Future<void> updateTask(Task task) async {
-
     objectbox.taskBox.put(task);
     try {
       await FirebaseFirestore.instance
           .collection(GetStorage().read('email'))
           .doc(task.id.toString())
           .update(task.toMap());
-
-      // data.doc(task.id.toString()).update(task.toMap());
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception("Failed to update task $e.toString()");
     }
   }
 
@@ -62,13 +55,11 @@ class FirestoreRepository {
     objectbox.taskBox.remove(task.id);
     try {
       await FirebaseFirestore.instance
-          .collection(GetStorage()
-          .read('email'))
+          .collection(GetStorage().read('email'))
           .doc(task.id.toString())
           .delete();
-          
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception("Failed to delete task: $e.toString()");
     }
   }
 }

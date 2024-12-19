@@ -3,21 +3,23 @@ import 'package:taskapp/models/task.dart';
 import '../../blocs/bloc_exports.dart';
 
 class EditTaskScreen extends StatelessWidget {
-
   final Task oldTask;
   const EditTaskScreen({super.key, required this.oldTask});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController titleController = TextEditingController(text: oldTask.title);
-    TextEditingController descriptionController = TextEditingController(text: oldTask.description);
+    TextEditingController titleController =
+        TextEditingController(text: oldTask.title);
+    TextEditingController descriptionController =
+        TextEditingController(text: oldTask.description);
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           const Text(
             'Edit Task',
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
           Padding(
@@ -50,12 +52,11 @@ class EditTaskScreen extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     var editedTask = Task(
-                      title: titleController.text,
-                      description: descriptionController.text,
-                      date: DateTime.now().toString(),
-                      id: oldTask.id,
-                      isDone: false
-                    );
+                        title: titleController.text,
+                        description: descriptionController.text,
+                        date: DateTime.now().toString(),
+                        id: oldTask.id,
+                        isDone: oldTask.isDone);
                     context.read<TaskBloc>().add(EditTask(newTask: editedTask));
                     context.read<TaskBloc>().add(GetAllTasks());
                     Navigator.of(context).pop();
