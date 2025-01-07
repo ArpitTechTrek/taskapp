@@ -27,15 +27,13 @@ class TaskLists extends StatelessWidget {
                   children: [
                     Padding(
                       padding:
-                          //const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                          const EdgeInsets.only(bottom: 5, left: 10),
+                      const EdgeInsets.only(bottom: 5, left: 10),
                       child: Text(
                         task.description,
                         softWrap: true,
                         overflow: TextOverflow.visible,
                         style: const TextStyle(
                           fontSize: 16,
-                          //color: Colors.black,
                         ),
                       ),
                     ),

@@ -74,7 +74,6 @@ class _TasksScreenState extends State<TasksScreen> {
                       ),
                     ),
                     TaskLists(tasksLists: tasksLists),
-                    //TaskLists(tasksLists: tasksLists)
                   ],
                 ),
           floatingActionButton: FloatingActionButton(
