@@ -1,4 +1,4 @@
-import 'package:taskapp/models/task.dart';
+import 'package:taskapp/model/task.dart';
 import 'package:taskapp/objectbox.g.dart';
 
 class Objectbox {

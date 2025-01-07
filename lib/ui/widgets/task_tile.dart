@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:taskapp/models/task.dart';
+import 'package:taskapp/model/task.dart';
 import 'package:taskapp/ui/screens/edit_task_screen.dart';
 import 'package:taskapp/ui/widgets/popup_menu.dart';
 

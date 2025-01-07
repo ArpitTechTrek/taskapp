@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:taskapp/blocs/bloc_exports.dart';
 import 'package:taskapp/main.dart';
-import 'package:taskapp/models/task.dart';
+import 'package:taskapp/model/task.dart';
 import 'package:taskapp/repository/firestore_repository.dart';
 import 'package:taskapp/services/network_service.dart';
 
@@ -27,7 +27,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     try {
       await FirestoreRepository.createTask(event.task);
     } on Exception catch (e) {
-      emit(TaskState(errorMessage: "Failed to create task : ${e.toString()}"));
+      emit(TaskState(
+          errorMessage: "Failed to upload on server: ${e.toString()}"));
     }
   }
 
@@ -54,7 +55,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
             .toList();
         allTasks.addAll(updatedTasks);
       } catch (e) {
-        emit(TaskState(errorMessage: "Failed to get tasks : ${e.toString()}"));
+        emit(TaskState(
+            errorMessage:
+                "Failed to sync tasks from server : ${e.toString()}"));
         return;
       }
     } else {
@@ -76,7 +79,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       await FirestoreRepository.updateTask(updateTask);
       objectbox.taskBox.put(updateTask);
     } catch (e) {
-      emit(TaskState(errorMessage: "Failed to update task : ${e.toString()}"));
+      emit(TaskState(
+          errorMessage: "Failed to update task on server : ${e.toString()}"));
     }
   }
 
@@ -89,7 +93,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     try {
       await FirestoreRepository.updateTask(event.newTask);
     } on Exception catch (e) {
-      emit(TaskState(errorMessage: "Failed to edit: ${e.toString()}"));
+      emit(TaskState(
+          errorMessage: "Failed to edit task on server: ${e.toString()}"));
     }
   }
 
@@ -102,7 +107,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     try {
       await FirestoreRepository.deleteTask(event.task);
     } on Exception catch (e) {
-      emit(TaskState(errorMessage: "Failed to delete task : ${e.toString()}"));
+      emit(TaskState(
+          errorMessage: "Failed to delete task from server: ${e.toString()}"));
     }
   }
 }  

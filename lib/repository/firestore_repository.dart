@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:taskapp/main.dart';
-import 'package:taskapp/models/task.dart';
+import 'package:taskapp/model/task.dart';
 
 class FirestoreRepository {
   //create task function
