@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:taskapp/ui/screens/tasks_screen.dart';
@@ -73,7 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //final isValid = _formKey.currentState!.validate();
                   _auth
                       .signInWithEmailAndPassword(
                           email: _emailController.text,
