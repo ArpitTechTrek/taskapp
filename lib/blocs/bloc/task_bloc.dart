@@ -21,9 +21,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   //Here we are creating the task.
   Future<void> _onCreateTask(CreateTask event, Emitter<TaskState> emit) async {
-    //Creating the task locally first
-    objectbox.taskBox.put(event.task);
-    //creating task on firebase
     try {
       await FirestoreRepository.createTask(event.task);
     } on Exception catch (e) {

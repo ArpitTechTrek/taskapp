@@ -6,9 +6,8 @@ import 'package:taskapp/model/task.dart';
 class FirestoreRepository {
   //create task function
   static Future<void> createTask(Task task) async {
-    objectbox.taskBox.put(task);
-
     try {
+      objectbox.taskBox.put(task);
       await FirebaseFirestore.instance
           .collection(GetStorage().read('email'))
           .doc(task.id.toString())
@@ -39,8 +38,8 @@ class FirestoreRepository {
 
   //update task function whether it is completed or not
   static Future<void> updateTask(Task task) async {
-    objectbox.taskBox.put(task);
     try {
+      objectbox.taskBox.put(task);
       await FirebaseFirestore.instance
           .collection(GetStorage().read('email'))
           .doc(task.id.toString())
@@ -52,8 +51,8 @@ class FirestoreRepository {
 
   //deleting the task from the datebase.
   static Future<void> deleteTask(Task task) async {
-    objectbox.taskBox.remove(task.id);
     try {
+      objectbox.taskBox.remove(task.id);
       await FirebaseFirestore.instance
           .collection(GetStorage().read('email'))
           .doc(task.id.toString())
